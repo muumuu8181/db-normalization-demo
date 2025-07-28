@@ -8854,8 +8854,8 @@ SET
         
         // ==================== Gemini AI統合機能 ====================
         
-        // Gemini APIキー（実際の運用では環境変数または安全な方法で管理）
-        const GEMINI_API_KEY = "AIzaSyBBrfhTE7BRy2JlWMKv8CIdF7LNV_QyA-o";
+        // Gemini APIキー管理
+        let GEMINI_API_KEY = localStorage.getItem('gemini_api_key_v2') || null;
         
         // タブ切り替え機能
         function showSqlTab() {
@@ -8877,6 +8877,23 @@ SET
             const button = document.getElementById('generateErButton');
             const originalText = button.textContent;
             const apiStatus = document.getElementById('apiStatus');
+            
+            // APIキーチェック
+            if (!GEMINI_API_KEY) {
+                const inputKey = prompt('Gemini APIキーを入力してください\\n\\n取得方法:\\n1. https://aistudio.google.com/app/apikey にアクセス\\n2. \"Create API Key\"をクリック\\n3. 生成されたキーをコピー\\n\\nAPIキー:');
+                if (!inputKey) {
+                    alert('APIキーが必要です');
+                    return;
+                }
+                GEMINI_API_KEY = inputKey.trim();
+                localStorage.setItem('gemini_api_key_v2', GEMINI_API_KEY);
+                
+                // API状態更新
+                apiStatus.style.display = 'block';
+                apiStatus.innerHTML = '🔑 APIキーが設定されました。再度ER図生成を実行してください。';
+                apiStatus.style.backgroundColor = '#d1ecf1';
+                return;
+            }
             
             // 選択されたデータベースを確認
             const selectedDBElement = document.querySelector('input[name="database"]:checked');
@@ -8948,7 +8965,15 @@ SET
             } catch (error) {
                 console.error('ER図生成エラー:', error);
                 
-                apiStatus.innerHTML = `❌ エラー: ${error.message}`;
+                // APIキーエラーの場合は削除
+                if (error.message.includes('API key not valid') || error.message.includes('401') || error.message.includes('403')) {
+                    localStorage.removeItem('gemini_api_key_v2');
+                    GEMINI_API_KEY = null;
+                    apiStatus.innerHTML = '❌ APIキーが無効です。再度設定してください。';
+                } else {
+                    apiStatus.innerHTML = `❌ エラー: ${error.message}`;
+                }
+                
                 apiStatus.style.backgroundColor = '#f8d7da';
                 apiStatus.style.borderColor = '#f5c6cb';
                 
@@ -8966,31 +8991,77 @@ SET
         // Gemini API呼び出し
         async function callGeminiAPI(prompt) {
             try {
+                console.log('Gemini API呼び出し開始...');
+                console.log('プロンプト長:', prompt.length);
+                console.log('APIキー:', GEMINI_API_KEY.substring(0, 20) + '...');
+                
+                const requestBody = {
+                    contents: [{
+                        parts: [{
+                            text: prompt
+                        }]
+                    }],
+                    generationConfig: {
+                        temperature: 0.7,
+                        topK: 40,
+                        topP: 0.95,
+                        maxOutputTokens: 2048,
+                    },
+                    safetySettings: [
+                        {
+                            category: "HARM_CATEGORY_HARASSMENT",
+                            threshold: "BLOCK_MEDIUM_AND_ABOVE"
+                        },
+                        {
+                            category: "HARM_CATEGORY_HATE_SPEECH",
+                            threshold: "BLOCK_MEDIUM_AND_ABOVE"
+                        },
+                        {
+                            category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", 
+                            threshold: "BLOCK_MEDIUM_AND_ABOVE"
+                        },
+                        {
+                            category: "HARM_CATEGORY_DANGEROUS_CONTENT",
+                            threshold: "BLOCK_MEDIUM_AND_ABOVE"
+                        }
+                    ]
+                };
+                
+                console.log('リクエストボディ:', JSON.stringify(requestBody, null, 2));
+                
                 const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_API_KEY}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({
-                        contents: [{
-                            parts: [{
-                                text: prompt
-                            }]
-                        }]
-                    })
+                    body: JSON.stringify(requestBody)
                 });
                 
+                console.log('レスポンス状態:', response.status, response.statusText);
+                
                 if (!response.ok) {
-                    throw new Error(`API呼び出し失敗: ${response.status} ${response.statusText}`);
+                    const errorText = await response.text();
+                    console.error('APIエラー詳細:', errorText);
+                    throw new Error(`API呼び出し失敗: ${response.status} ${response.statusText}\n詳細: ${errorText}`);
                 }
                 
                 const data = await response.json();
+                console.log('レスポンスデータ:', data);
                 
-                if (!data.candidates || !data.candidates[0] || !data.candidates[0].content) {
-                    throw new Error('APIレスポンスが無効です');
+                if (!data.candidates || !data.candidates[0]) {
+                    console.error('候補が見つかりません:', data);
+                    throw new Error('APIから候補が返されませんでした');
                 }
                 
-                return data.candidates[0].content.parts[0].text;
+                if (!data.candidates[0].content) {
+                    console.error('コンテンツが見つかりません:', data.candidates[0]);
+                    throw new Error('APIからコンテンツが返されませんでした');
+                }
+                
+                const result = data.candidates[0].content.parts[0].text;
+                console.log('AI生成結果 (最初の200文字):', result.substring(0, 200));
+                
+                return result;
                 
             } catch (error) {
                 console.error('Gemini API エラー:', error);
@@ -9112,9 +9183,18 @@ Mermaid ERDiagram記法で出力してください。`;
         
         // APIキーリセット
         function clearApiKey() {
-            const confirm = window.confirm('APIキーをリセットしますか？\n（現在のキーは固定設定されています）');
-            if (confirm) {
-                alert('このバージョンではAPIキーは固定設定されています。\n実際の運用では環境変数で管理することを推奨します。');
+            const confirmReset = window.confirm('APIキーをリセットしますか？\n次回ER図生成時に再入力が必要になります。');
+            if (confirmReset) {
+                localStorage.removeItem('gemini_api_key_v2');
+                GEMINI_API_KEY = null;
+                
+                const apiStatus = document.getElementById('apiStatus');
+                apiStatus.style.display = 'block';
+                apiStatus.innerHTML = '🔑 APIキーがリセットされました。次回ER図生成時に再入力してください。';
+                apiStatus.style.backgroundColor = '#fff3e0';
+                apiStatus.style.borderColor = '#ff9800';
+                
+                alert('APIキーがリセットされました。');
             }
         }
         
@@ -9131,8 +9211,15 @@ Mermaid ERDiagram記法で出力してください。`;
             // API状態を初期表示
             const apiStatus = document.getElementById('apiStatus');
             apiStatus.style.display = 'block';
-            apiStatus.innerHTML = '🤖 Gemini AI準備完了 - ER図生成が利用可能です';
-            apiStatus.style.backgroundColor = '#d1ecf1';
+            
+            if (GEMINI_API_KEY) {
+                apiStatus.innerHTML = '🤖 Gemini AI準備完了 - ER図生成が利用可能です';
+                apiStatus.style.backgroundColor = '#d1ecf1';
+            } else {
+                apiStatus.innerHTML = '🔑 ER図生成にはGemini APIキーが必要です。生成ボタンクリック時に設定できます。';
+                apiStatus.style.backgroundColor = '#fff3e0';
+                apiStatus.style.borderColor = '#ff9800';
+            }
         });
     </script>
 </body>
