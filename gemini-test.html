@@ -1,0 +1,49 @@
+
+<\!DOCTYPE html>
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <title>Gemini API テスト</title>
+</head>
+<body>
+    <h1>簡易Gemini APIテスト</h1>
+    <input type='text' id='prompt' placeholder='質問を入力' style='width: 400px;'>
+    <button onclick='testGemini()'>送信</button>
+    <div id='result' style='margin-top: 20px; padding: 10px; border: 1px solid #ccc;'></div>
+    
+    <script>
+    async function testGemini() {
+        const prompt = document.getElementById('prompt').value;
+        const resultDiv = document.getElementById('result');
+        
+        // デモ用のAPIキー（実際は無効）
+        const apiKey = 'test-key';
+        
+        resultDiv.innerHTML = '処理中...';
+        
+        try {
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    contents: [{
+                        parts: [{
+                            text: prompt
+                        }]
+                    }]
+                })
+            });
+            
+            const data = await response.json();
+            resultDiv.innerHTML = '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            
+        } catch (error) {
+            resultDiv.innerHTML = 'エラー: ' + error.message + '<br>（これは正常です - APIキーが無効なため）';
+        }
+    }
+    </script>
+</body>
+</html>
+

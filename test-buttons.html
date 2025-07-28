@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ボタンテスト</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        button { 
+            padding: 10px 20px; 
+            margin: 10px; 
+            border: none; 
+            border-radius: 5px; 
+            cursor: pointer; 
+            color: white;
+        }
+        .demo { background-color: #9e9e9e; }
+        .apikey { background-color: #ff9800; }
+        .oauth { background-color: #4285f4; }
+        #status { 
+            margin-top: 20px; 
+            padding: 10px; 
+            border-radius: 5px; 
+            display: none; 
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔐 認証ボタンテスト</h1>
+    
+    <div>
+        <button class="oauth" onclick="signInWithGoogle()">
+            🔑 Googleでサインイン (OAuth)
+        </button>
+        <button class="apikey" onclick="useApiKey()">
+            🔧 APIキーを使用
+        </button>
+        <button class="demo" onclick="testDemo()">
+            🎯 デモモード
+        </button>
+    </div>
+    
+    <div id="status"></div>
+    
+    <div id="result" style="margin-top: 20px; padding: 10px; background: #f0f0f0; border-radius: 5px; display: none;">
+        結果表示エリア
+    </div>
+
+    <script>
+        let authMode = 'none';
+        
+        function testDemo() {
+            console.log('testDemo() called');
+            authMode = 'demo';
+            updateStatus('demo', 'デモモード - サンプルER図で動作確認');
+            showResult('デモモードが有効になりました！');
+        }
+        
+        function useApiKey() {
+            console.log('useApiKey() called');
+            const apiKey = prompt('APIキーを入力してください:');
+            if (apiKey) {
+                authMode = 'apikey';
+                updateStatus('apikey', 'APIキー認証設定完了');
+                showResult(`APIキーが設定されました: ${apiKey.substring(0, 10)}...`);
+            }
+        }
+        
+        function signInWithGoogle() {
+            console.log('signInWithGoogle() called');
+            authMode = 'oauth';
+            updateStatus('oauth', 'OAuth認証（デモ実装）');
+            showResult('OAuth認証が実行されました（デモ）');
+        }
+        
+        function updateStatus(mode, message) {
+            const status = document.getElementById('status');
+            status.style.display = 'block';
+            
+            switch(mode) {
+                case 'oauth':
+                    status.style.backgroundColor = '#e8f5e8';
+                    status.innerHTML = '✅ ' + message;
+                    break;
+                case 'apikey':
+                    status.style.backgroundColor = '#fff3e0';
+                    status.innerHTML = '🔧 ' + message;
+                    break;
+                case 'demo':
+                    status.style.backgroundColor = '#f3e5f5';
+                    status.innerHTML = '🎯 ' + message;
+                    break;
+            }
+        }
+        
+        function showResult(message) {
+            const result = document.getElementById('result');
+            result.style.display = 'block';
+            result.innerHTML = message;
+        }
+        
+        // ページ読み込み時の初期化
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('ページが読み込まれました');
+        });
+    </script>
+</body>
+</html>

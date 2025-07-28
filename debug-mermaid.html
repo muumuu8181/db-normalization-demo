@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mermaid Debug Tool</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js"></script>
+</head>
+<body>
+    <h1>Mermaid Debug Tool</h1>
+    
+    <h2>1. Paste AI Generated Code</h2>
+    <textarea id="mermaidInput" rows="15" cols="80" placeholder="Paste AI generated Mermaid code here">
+erDiagram
+    Customers ||--o{ Accounts : has
+    Customers {
+        customer_id PK
+        name
+        birth_date
+        ssn
+        phone
+        address
+    }
+    Accounts {
+        account_id PK
+        customer_id FK
+        account_type
+        balance
+    }
+    </textarea>
+    <br><br>
+    
+    <button onclick="testMermaid()">Test Run</button>
+    <button onclick="clearResult()">Clear</button>
+    
+    <h2>2. Result</h2>
+    <div id="result" style="border: 1px solid #ccc; padding: 10px; min-height: 200px;">
+        Result will be displayed here
+    </div>
+    
+    <h2>3. Error Log</h2>
+    <div id="errorLog" style="background: #e6ffe6; padding: 10px; border-radius: 5px;">
+        No errors
+    </div>
+
+    <script>
+        mermaid.initialize({
+            startOnLoad: false,
+            theme: 'default'
+        });
+        
+        function testMermaid() {
+            const input = document.getElementById('mermaidInput').value.trim();
+            const result = document.getElementById('result');
+            const errorLog = document.getElementById('errorLog');
+            
+            console.log('テスト開始');
+            console.log('入力コード:', input);
+            
+            // Clear error log
+            errorLog.innerHTML = 'No errors';
+            errorLog.style.background = '#e6ffe6';
+            
+            try {
+                // Generate unique ID
+                const id = 'mermaid-test-' + Date.now();
+                
+                // Insert Mermaid code
+                result.innerHTML = `<div id="${id}" class="mermaid">${input}</div>`;
+                
+                // Try rendering
+                mermaid.run().then(() => {
+                    console.log('Render success');
+                    errorLog.innerHTML = '✅ Render success';
+                }).catch(error => {
+                    console.error('Render error:', error);
+                    errorLog.innerHTML = '❌ Render error: ' + error.message;
+                    errorLog.style.background = '#ffe6e6';
+                    
+                    // Show text on error
+                    result.innerHTML = '<pre style="background: #f5f5f5; padding: 10px;">' + input + '</pre>';
+                });
+                
+            } catch (error) {
+                console.error('Init error:', error);
+                errorLog.innerHTML = '❌ Init error: ' + error.message;
+                errorLog.style.background = '#ffe6e6';
+            }
+        }
+        
+        function clearResult() {
+            document.getElementById('result').innerHTML = 'Result will be displayed here';
+            document.getElementById('errorLog').innerHTML = 'No errors';
+            document.getElementById('errorLog').style.background = '#e6ffe6';
+        }
+    </script>
+</body>
+</html>

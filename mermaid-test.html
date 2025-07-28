@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mermaid最小テスト</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.0/dist/mermaid.min.js"></script>
+</head>
+<body>
+    <h1>Mermaid最小テスト</h1>
+    
+    <h2>1. 基本フローチャート</h2>
+    <div class="mermaid">
+        graph TD
+            A[Start] --> B[End]
+    </div>
+    
+    <h2>2. 最小ER図</h2>
+    <div class="mermaid">
+        erDiagram
+            users {
+                id int
+                name string
+            }
+    </div>
+    
+    <h2>3. リレーション付きER図</h2>
+    <div class="mermaid">
+        erDiagram
+            users ||--o{ orders : places
+            users {
+                id int
+                name string
+            }
+            orders {
+                id int
+                user_id int
+            }
+    </div>
+    
+    <button onclick="testManualRender()">手動描画テスト</button>
+    <div id="manual-test"></div>
+
+    <script>
+        // Mermaid初期化
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default'
+        });
+        
+        function testManualRender() {
+            const code = `
+                erDiagram
+                    customers {
+                        customer_id int
+                        name string
+                    }
+            `;
+            
+            const element = document.getElementById('manual-test');
+            element.innerHTML = '<div class="mermaid">' + code + '</div>';
+            
+            setTimeout(() => {
+                mermaid.run().then(() => {
+                    console.log('手動描画成功');
+                }).catch(error => {
+                    console.error('手動描画エラー:', error);
+                    element.innerHTML = '<p style="color: red;">描画エラー: ' + error.message + '</p>';
+                });
+            }, 100);
+        }
+    </script>
+</body>
+</html>

@@ -1,4 +1,149 @@
-127.0.0.1 - - [25/Jul/2025 17:58:47] "HEAD / HTTP/1.1" 200 -
-127.0.0.1 - - [25/Jul/2025 17:59:26] "GET / HTTP/1.1" 200 -
-127.0.0.1 - - [25/Jul/2025 17:59:26] code 404, message File not found
-127.0.0.1 - - [25/Jul/2025 17:59:26] "GET /favicon.ico HTTP/1.1" 404 -
+INFO:__main__:DB正規化ツール v1.1 サーバー開始
+INFO:__main__:ポート: 8000
+INFO:__main__:URL: http://localhost:8000
+INFO:__main__:Gemini CLI統合サーバーが起動しました
+127.0.0.1 - - [28/Jul/2025 17:12:12] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 17:12:40] "HEAD / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 17:15:20] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 17:17:43] "GET /test-buttons.html HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 17:22:27] "GET /test-buttons.html HTTP/1.1" 304 -
+127.0.0.1 - - [28/Jul/2025 17:23:38] "GET /test-buttons.html HTTP/1.1" 304 -
+127.0.0.1 - - [28/Jul/2025 17:23:44] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 17:41:55] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 17:41:56] "GET / HTTP/1.1" 304 -
+127.0.0.1 - - [28/Jul/2025 17:55:46] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 18:02:06] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 18:02:44] code 404, message File not found
+127.0.0.1 - - [28/Jul/2025 18:02:44] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jul/2025 18:05:37] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 18:05:37] code 404, message File not found
+127.0.0.1 - - [28/Jul/2025 18:05:37] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jul/2025 18:15:58] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 18:15:58] code 404, message File not found
+127.0.0.1 - - [28/Jul/2025 18:15:58] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jul/2025 18:21:57] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 18:21:57] code 404, message File not found
+127.0.0.1 - - [28/Jul/2025 18:21:57] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jul/2025 19:13:16] "GET / HTTP/1.1" 200 -
+----------------------------------------
+Exception occurred during processing of request from ('127.0.0.1', 41446)
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/socketserver.py", line 318, in _handle_request_noblock
+    self.process_request(request, client_address)
+  File "/usr/lib/python3.12/socketserver.py", line 349, in process_request
+    self.finish_request(request, client_address)
+  File "/usr/lib/python3.12/socketserver.py", line 362, in finish_request
+    self.RequestHandlerClass(request, client_address, self)
+  File "/usr/lib/python3.12/http/server.py", line 672, in __init__
+    super().__init__(*args, **kwargs)
+  File "/usr/lib/python3.12/socketserver.py", line 761, in __init__
+    self.handle()
+  File "/usr/lib/python3.12/http/server.py", line 436, in handle
+    self.handle_one_request()
+  File "/usr/lib/python3.12/http/server.py", line 424, in handle_one_request
+    method()
+  File "/usr/lib/python3.12/http/server.py", line 679, in do_GET
+    self.copyfile(f, self.wfile)
+  File "/usr/lib/python3.12/http/server.py", line 878, in copyfile
+    shutil.copyfileobj(source, outputfile)
+  File "/usr/lib/python3.12/shutil.py", line 204, in copyfileobj
+    fdst_write(buf)
+  File "/usr/lib/python3.12/socketserver.py", line 840, in write
+    self._sock.sendall(b)
+BrokenPipeError: [Errno 32] Broken pipe
+----------------------------------------
+127.0.0.1 - - [28/Jul/2025 19:25:17] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 19:25:43] code 404, message File not found
+127.0.0.1 - - [28/Jul/2025 19:25:43] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jul/2025 19:47:39] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 19:47:39] code 404, message File not found
+127.0.0.1 - - [28/Jul/2025 19:47:39] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jul/2025 19:58:09] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 20:00:51] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 20:00:51] code 404, message File not found
+127.0.0.1 - - [28/Jul/2025 20:00:51] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jul/2025 20:18:04] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 20:18:05] code 404, message File not found
+127.0.0.1 - - [28/Jul/2025 20:18:05] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jul/2025 20:18:09] "GET / HTTP/1.1" 304 -
+127.0.0.1 - - [28/Jul/2025 20:18:09] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 20:18:09] code 404, message File not found
+127.0.0.1 - - [28/Jul/2025 20:18:09] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jul/2025 20:27:33] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 20:27:33] code 404, message File not found
+127.0.0.1 - - [28/Jul/2025 20:27:33] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jul/2025 20:32:49] "GET / HTTP/1.1" 304 -
+127.0.0.1 - - [28/Jul/2025 20:32:49] code 404, message File not found
+127.0.0.1 - - [28/Jul/2025 20:32:49] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jul/2025 20:33:11] "GET /test-gemini.html HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 20:33:20] code 404, message File not found
+127.0.0.1 - - [28/Jul/2025 20:33:20] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jul/2025 20:35:33] "GET /test-gemini.html HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 20:35:33] code 404, message File not found
+127.0.0.1 - - [28/Jul/2025 20:35:33] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jul/2025 20:55:06] "GET /test-gemini.html HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 20:55:07] code 404, message File not found
+127.0.0.1 - - [28/Jul/2025 20:55:07] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jul/2025 21:10:30] "GET /test-gemini.html HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 21:10:30] code 404, message File not found
+127.0.0.1 - - [28/Jul/2025 21:10:30] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jul/2025 21:15:43] "GET /test-gemini.html HTTP/1.1" 304 -
+127.0.0.1 - - [28/Jul/2025 21:15:43] code 404, message File not found
+127.0.0.1 - - [28/Jul/2025 21:15:43] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jul/2025 21:16:18] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 21:16:40] code 404, message File not found
+127.0.0.1 - - [28/Jul/2025 21:16:40] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jul/2025 21:30:25] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 21:30:25] code 404, message File not found
+127.0.0.1 - - [28/Jul/2025 21:30:25] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jul/2025 21:41:44] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 21:41:44] code 404, message File not found
+127.0.0.1 - - [28/Jul/2025 21:41:44] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jul/2025 21:45:34] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 21:45:35] code 404, message File not found
+127.0.0.1 - - [28/Jul/2025 21:45:35] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jul/2025 22:27:56] "GET / HTTP/1.1" 304 -
+127.0.0.1 - - [28/Jul/2025 22:27:57] code 404, message File not found
+127.0.0.1 - - [28/Jul/2025 22:27:57] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jul/2025 22:46:40] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 22:46:40] code 404, message File not found
+127.0.0.1 - - [28/Jul/2025 22:46:40] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jul/2025 22:51:00] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 22:51:01] code 404, message File not found
+127.0.0.1 - - [28/Jul/2025 22:51:01] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jul/2025 22:52:15] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 22:52:15] code 404, message File not found
+127.0.0.1 - - [28/Jul/2025 22:52:15] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jul/2025 22:54:41] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 22:54:41] code 404, message File not found
+127.0.0.1 - - [28/Jul/2025 22:54:41] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jul/2025 22:57:21] "GET / HTTP/1.1" 304 -
+127.0.0.1 - - [28/Jul/2025 22:57:21] code 404, message File not found
+127.0.0.1 - - [28/Jul/2025 22:57:21] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jul/2025 22:57:32] "GET /mermaid-test.html HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 23:02:05] "GET /mermaid-test.html HTTP/1.1" 304 -
+127.0.0.1 - - [28/Jul/2025 23:02:07] "GET /mermaid-test.html HTTP/1.1" 304 -
+127.0.0.1 - - [28/Jul/2025 23:02:08] "GET /mermaid-test.html HTTP/1.1" 304 -
+127.0.0.1 - - [28/Jul/2025 23:02:09] "GET /mermaid-test.html HTTP/1.1" 304 -
+127.0.0.1 - - [28/Jul/2025 23:02:09] "GET /mermaid-test.html HTTP/1.1" 304 -
+127.0.0.1 - - [28/Jul/2025 23:03:53] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 23:03:53] code 404, message File not found
+127.0.0.1 - - [28/Jul/2025 23:03:53] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jul/2025 23:09:06] "GET / HTTP/1.1" 304 -
+127.0.0.1 - - [28/Jul/2025 23:09:06] code 404, message File not found
+127.0.0.1 - - [28/Jul/2025 23:09:06] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jul/2025 23:13:32] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 23:13:32] "GET / HTTP/1.1" 304 -
+127.0.0.1 - - [28/Jul/2025 23:13:32] code 404, message File not found
+127.0.0.1 - - [28/Jul/2025 23:13:32] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jul/2025 23:16:28] "GET / HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 23:16:28] code 404, message File not found
+127.0.0.1 - - [28/Jul/2025 23:16:28] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jul/2025 23:21:24] "GET / HTTP/1.1" 304 -
+127.0.0.1 - - [28/Jul/2025 23:21:24] code 404, message File not found
+127.0.0.1 - - [28/Jul/2025 23:21:24] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 -
+127.0.0.1 - - [28/Jul/2025 23:22:08] "GET /debug-mermaid.html HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 23:23:48] "GET /debug-mermaid.html HTTP/1.1" 200 -
+127.0.0.1 - - [28/Jul/2025 23:34:05] "GET /debug-mermaid.html HTTP/1.1" 304 -
+127.0.0.1 - - [28/Jul/2025 23:37:46] "GET /debug-mermaid.html HTTP/1.1" 304 -
+127.0.0.1 - - [28/Jul/2025 23:37:47] "GET /debug-mermaid.html HTTP/1.1" 304 -
